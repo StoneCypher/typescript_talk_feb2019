@@ -2,4 +2,4 @@
 
 My February, 2019 talk on Typescript.
 
-[Just view it on Google Docs](https://stonecypher.github.io/typescript_talk_feb2019/).
+[Just view it on Github Docs](https://stonecypher.github.io/typescript_talk_feb2019/).
