@@ -162,3 +162,31 @@ div.fullslide {
   background-size: contain;
   background-repeat: no-repeat;
 }
+
+div.fullslide.movedown {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: black;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+}
+
+div.fullslide-overlay {
+  position: fixed;
+  z-index: 2;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  font-size: 300%;
+  top: 0.5em;
+  left: 0.5em;
+  right: 0.5em;
+  background-color: #223;
+  border: 0.1em solid black;
+  border-radius: 0.25em;
+  padding: 0.25em;
+}
