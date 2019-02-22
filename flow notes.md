@@ -220,16 +220,3 @@ Imperative: saving time saves money
 You care about your time, and your boss cares about money
 
 Some kind of incentives are aligned joke belongs here
-
-
-
-
-
-...
-
-percent of time actually programming: 52%
-percent of programming time debugging: 55%
-  supported by study, backed up by webstorm
-
-we believe in big names, right?
-percent of airbnb bugs would have been fixed by ts: something in the 60s
