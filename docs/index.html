@@ -1,0 +1,2949 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link href="css/highlight.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="js/highlight.pack.js"></script>
+    <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+  </head>
+  <body>
+    <textarea id="source">
+name: inverse
+layout: true
+class: center, middle, inverse
+
+
+
+---
+
+
+
+
+# Placeholder page 1 of 2
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+
+.left-column[
+  ## Testing
+]
+.right-column[
+
+# Placeholder page 2 of 2
+- Presentation is running
+- This panel is for testing projectors
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+template: inverse
+
+# Purity is your <span class="red">Very Best Friend</span>
+[ HoneyBook Tech Talk: April 11 2017 ]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+template: inverse
+
+# <span class="gray">I'm</span> John Haugeland
+
+<table class="threepane">
+  <tr>
+    <td><img src="img/coffee.png"/></td>
+    <td><img src="img/hair.png"/></td>
+    <td><img src="img/sandals.png"/></td>
+  </tr>
+  <tr>
+    <td>Coffee</td>
+    <td>Long hair</td>
+    <td>Sandals</td>
+  </tr>
+</table>
+
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+
+<div class="fullslide" style="background-image: url('img/SoYouKnowWhatTodayIsRight.gif');"></div>
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+
+<div class="fullslide" style="background-image: url('img/alex trebek.jpg');"></div>
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+
+template: inverse
+
+# Purity is your <span class="red">Very Best Friend</span>
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+
+template: inverse
+
+# that's right, it's<br/><br/><span class="red">Purity Propaganda</span>
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+
+# TL;DR: Nutshell trapdoor, pg 1
+
+<br/>
+Purity means working without side effects.  Functions take input only from arguments, output only
+through return values, and always give the same result for the same arguments.  Don't change your
+objects, don't keep local state, don't modify closure state, don't return objects with mutable
+backhooks.
+
+Absolute purity isn't possible in Javascript, because there's no way to fully encapsulate events, IO,
+and so on, but you can get arbitrarily close, and it's useful.
+
+In particular, things that never have side effects can be safely snapped together without regard to
+how their internals work, allowing a more carefree style of programming that also reads better.  Some
+of the idioms thereof, like what Javascript people call "fluent interfaces," are examples of what's
+under the hood.
+
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+
+# TL;DR: Nutshell trapdoor, pg 2
+
+<br/>
+Building things progressively out of small pieces - composition - is more convenient in the
+constraints of a functional environment than most places, and so people tend towards it.
+
+Being able to work purely is also a threshhold before being able to get serious about functional
+programming, which is becoming more prevalent in ES6 and ES8, and which leads to cleaner, easier to
+reason about code.
+
+For the next 20 minutes, I'm going to prattle at you about purity and composability, and why you
+should care.
+
+<img src="img/ImBoredNeilPatrickHarris.gif"/>
+
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+
+template: inverse
+
+# In this talk
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+
+# <span class="red">This one's shorter!</span>
+<br/>
+
+<img src="img/oh_thank_god.png"/>
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+]
+.right-column[
+
+- <span class="red">Why do we care</span> about purity
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+]
+.right-column[
+
+- Why do we care about purity
+
+- <span class="red">What is</span> purity
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+]
+.right-column[
+
+- Why do we care about purity
+
+- What is purity
+
+- <span class="red">That's all</span> this is about
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+]
+.right-column[
+
+- Why do we care about purity
+
+- What is purity
+
+- That's all this is about
+
+- <span class="red">How much work</span> is purity
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+]
+.right-column[
+
+- Why do we care about purity
+
+- What is purity
+
+- That's all this is about
+
+- How much work is purity
+
+- <span class="red">How do we</span> do us one purity
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+]
+.right-column[
+
+- Why do we care about purity
+
+- What is purity
+
+- That's all this is about
+
+- How much work is purity
+
+- How do we do us one purity
+
+- <span class="red">Next steps</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+template: inverse
+
+# <span class="red">Why do we care</span> about Purity
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## Why do we care
+]
+.right-column[
+
+# Why do we care about Purity
+
+- Easier
+- Faster
+- Fewer defects
+- More reusable
+- Language benefits
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## Why do we care
+]
+.right-column[
+
+# Why do we care about Purity
+
+- Purity makes programming <span class="red">easier</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## Why do we care
+]
+.right-column[
+
+# Why do we care about Purity
+
+- Purity makes programming easier
+  - Code <span class="red">without side effects is easier</span> to reason about
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## Why do we care
+]
+.right-column[
+
+# Why do we care about Purity
+
+- Purity makes programming easier
+  - No side effects &rArr; easier to reason about
+  - Pure code tends to be composable; <span class="red">composable code tends to be shorter</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## Why do we care
+]
+.right-column[
+
+# Why do we care about Purity
+
+- Purity makes programming easier
+  - No side effects &rArr; easier to reason about
+  - Pure &rArr; composable; composable &rArr; shorter
+  - Container transformations are recast as <span class="red">standard traversals like <tt>.map</tt></span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## Why do we care
+]
+.right-column[
+
+# Why do we care about Purity
+
+- Purity makes programming easier
+  - Easier reasoning; composable; shorter; <tt>.map</tt>
+
+- Purity makes programming <span class="red">faster</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## Why do we care
+]
+.right-column[
+
+# Why do we care about Purity
+
+- Purity makes programming easier
+  - Easier reasoning; composable; shorter; <tt>.map</tt>
+
+- Purity makes programming faster
+  - <span class="red">Composition</span>, once learned, <span class="red">is trivial</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## Why do we care
+]
+.right-column[
+
+# Why do we care about Purity
+
+- Purity makes programming easier
+  - Easier reasoning; composable; shorter; <tt>.map</tt>
+
+- Purity makes programming faster
+  - Composition is trivial
+  - Almost all coding is now <span class="red">library building</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## Why do we care
+]
+.right-column[
+
+# Why do we care about Purity
+
+- Purity makes programming easier
+  - Easier reasoning; composable; shorter; <tt>.map</tt>
+
+- Purity makes programming faster
+  - Composition is trivial
+  - Most coding &rArr; libraries
+  - <span class="red">State management is eliminated</span> in favor of argument passing
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## Why do we care
+]
+.right-column[
+
+# Why do we care about Purity
+
+- Purity makes programming easier
+  - Easier reasoning; composable; shorter; <tt>.map</tt>
+
+- Purity makes programming faster
+  - Composition; most code is library code; no state
+
+- Purity leads to <span class="red">fewer defects</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## Why do we care
+]
+.right-column[
+
+# Why do we care about Purity
+
+- Purity makes programming easier
+  - Easier reasoning; composable; shorter; <tt>.map</tt>
+
+- Purity makes programming faster
+  - Composition; most code is library code; no state
+
+- Purity leads to fewer defects
+  - <span class="red">Smaller functions are easier</span> to reason about
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## Why do we care
+]
+.right-column[
+
+# Why do we care about Purity
+
+- Purity makes programming easier
+  - Easier reasoning; composable; shorter; <tt>.map</tt>
+
+- Purity makes programming faster
+  - Composition; most code is library code; no state
+
+- Purity leads to fewer defects
+  - Smaller functions are easier to reason about
+  - <span class="red">Composition is easier</span> to reason about
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## Why do we care
+]
+.right-column[
+
+# Why do we care about Purity
+
+- Purity makes programming easier
+  - Easier reasoning; composable; shorter; <tt>.map</tt>
+
+- Purity makes programming faster
+  - Composition; most code is library code; no state
+
+- Purity leads to fewer defects
+  - Smaller functions are easier to reason about
+  - Composition is easier to reason about
+  - <span class="red">No state</span> to reason about
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## Why do we care
+]
+.right-column[
+
+# Why do we care about Purity
+
+- Purity makes programming easier
+  - Easier reasoning; composable; shorter; <tt>.map</tt>
+
+- Purity makes programming faster
+  - Composition; most code is library code; no state
+
+- Purity leads to fewer defects
+  - Smaller functions are easier to reason about
+  - Composition is easier to reason about
+  - No state to reason about
+  - <span class="red">Testing is far easier</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## Why do we care
+]
+.right-column[
+
+# Why do we care about Purity
+
+- Purity makes programming easier
+  - Easier reasoning; composable; shorter; <tt>.map</tt>
+
+- Purity makes programming faster
+  - Composition; most code is library code; no state
+
+- Purity leads to fewer defects
+  - Smaller functions are easier to reason about
+  - Composition is easier to reason about
+  - No state to reason about
+  - Testing is far easier
+  - <span class="red">Refactoring is far easier</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## Why do we care
+]
+.right-column[
+
+# Why do we care about Purity
+
+- Purity makes programming easier
+  - Easier reasoning; composable; shorter; <tt>.map</tt>
+
+- Purity makes programming faster
+  - Composition; most code is library code; no state
+
+- Purity leads to fewer defects
+  - Smaller; comp; no state; easier testing, refactoring
+
+- Purity leads to <span class="red">more reusable code</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## Why do we care
+]
+.right-column[
+
+# Why do we care about Purity
+
+- Purity makes programming easier
+  - Easier reasoning; composable; shorter; <tt>.map</tt>
+
+- Purity makes programming faster
+  - Composition; most code is library code; no state
+
+- Purity leads to fewer defects
+  - Smaller; comp; no state; easier testing, refactoring
+
+- Purity leads to more reusable code
+  - Imperative makes "nouns;" <br/><span class="red">functional makes "verbs"</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## Why do we care
+]
+.right-column[
+
+# Why do we care about Purity
+
+- Purity makes programming easier
+  - Easier reasoning; composable; shorter; <tt>.map</tt>
+
+- Purity makes programming faster
+  - Composition; most code is library code; no state
+
+- Purity leads to fewer defects
+  - Smaller; comp; no state; easier testing, refactoring
+
+- Purity leads to more reusable code
+  - Imperative &rArr; nouns, functional &rArr; verbs
+  - No mutation means <span class="red">easy chainability</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## Why do we care
+]
+.right-column[
+
+# Why do we care about Purity
+
+- Purity makes programming easier
+  - Easier reasoning; composable; shorter; <tt>.map</tt>
+
+- Purity makes programming faster
+  - Composition; most code is library code; no state
+
+- Purity leads to fewer defects
+  - Smaller; comp; no state; easier testing, refactoring
+
+- Purity leads to more reusable code
+  - Imperative &rArr; nouns, functional &rArr; verbs
+  - No mutation means easy chainability
+  - No state means <span class="red">pieces snap together like Legos</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## Why do we care
+]
+.right-column[
+
+# Why do we care about Purity
+
+- Purity makes programming easier
+  - Easier reasoning; composable; shorter; <tt>.map</tt>
+
+- Purity makes programming faster
+  - Composition; most code is library code; no state
+
+- Purity leads to fewer defects
+  - Smaller; comp; no state; easier testing, refactoring
+
+- Purity leads to more reusable code
+  - Imperative &rArr; nouns, functional &rArr; verbs
+  - No mutation means easy chainability
+  - No state means pieces snap together like Legos
+  - <span class="red">Refactoring tends towards reuse</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## Why do we care
+]
+.right-column[
+
+# Why do we care about Purity
+
+- Purity makes programming easier
+  - Easier reasoning; composable; shorter; <tt>.map</tt>
+
+- Purity makes programming faster
+  - Composition; most code is library code; no state
+
+- Purity leads to fewer defects
+  - Smaller; comp; no state; easier testing, refactoring
+
+- Purity leads to more reusable code
+  - Nouns/verbs; chainable; lego snap; refactoring
+
+- <span class="red">Language and compiler benefits</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## Why do we care
+]
+.right-column[
+
+# Why do we care about Purity
+
+- Purity makes programming easier
+  - Easier reasoning; composable; shorter; <tt>.map</tt>
+
+- Purity makes programming faster
+  - Composition; most code is library code; no state
+
+- Purity leads to fewer defects
+  - Smaller; comp; no state; easier testing, refactoring
+
+- Purity leads to more reusable code
+  - Nouns/verbs; chainable; lego snap; refactoring
+
+- Language and compiler benefits
+  - The safety of <span class="red">idempotence and nullipotence</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## Why do we care
+]
+.right-column[
+
+# Why do we care about Purity
+
+- Purity makes programming easier
+  - Easier reasoning; composable; shorter; <tt>.map</tt>
+
+- Purity makes programming faster
+  - Composition; most code is library code; no state
+
+- Purity leads to fewer defects
+  - Smaller; comp; no state; easier testing, refactoring
+
+- Purity leads to more reusable code
+  - Nouns/verbs; chainable; lego snap; refactoring
+
+- Language and compiler benefits
+  - The safety of idempotence and nullipotence
+  - Optimization through <span class="red">referential transparency</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## Why do we care
+]
+.right-column[
+
+# Why do we care about Purity
+
+- Purity makes programming easier
+  - Easier reasoning; composable; shorter; <tt>.map</tt>
+
+- Purity makes programming faster
+  - Composition; most code is library code; no state
+
+- Purity leads to fewer defects
+  - Smaller; comp; no state; easier testing, refactoring
+
+- Purity leads to more reusable code
+  - Nouns/verbs; chainable; lego snap; refactoring
+
+- Language and compiler benefits
+  - The safety of idempotence and nullipotence
+  - Optimization through referential transparency
+  - <span class="red">Semi-automatic parallelization</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## Why do we care
+]
+.right-column[
+
+# Why do we care about Purity
+
+- Purity makes programming easier
+  - Easier reasoning; composable; shorter; <tt>.map</tt>
+
+- Purity makes programming faster
+  - Composition; most code is library code; no state
+
+- Purity leads to fewer defects
+  - Smaller; comp; no state; easier testing, refactoring
+
+- Purity leads to more reusable code
+  - Nouns/verbs; chainable; lego snap; refactoring
+
+- Language and compiler benefits
+  - The safety of idempotence and nullipotence
+  - Optimization through referential transparency
+  - Semi-automatic parallelization
+  - <span class="red">Immutability and transactional memory</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## Why do we care
+]
+.right-column[
+
+# Why do we care about Purity
+
+- Purity makes programming easier
+  - Easier reasoning; composable; shorter; <tt>.map</tt>
+
+- Purity makes programming faster
+  - Composition; most code is library code; no state
+
+- Purity leads to fewer defects
+  - Smaller; comp; no state; easier testing, refactoring
+
+- Purity leads to more reusable code
+  - Nouns/verbs; chainable; lego snap; refactoring
+
+- Language and compiler benefits
+  - idpot; ∅pot; ref-t; autopar; immut; trans mem
+
+- <span class="red">... and more!</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+template: inverse
+
+# What is <span class="red">Purity</span>
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## Why do we care
+  ## What is Purity
+]
+.right-column[
+
+# What is Purity
+
+- It's actually <span class="red">stupidly simple</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+]
+.right-column[
+
+# What is Purity
+
+- It's actually stupidly simple
+- It's one of the <span class="red">big three advantages</span> of functional programming
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+]
+.right-column[
+
+# What is Purity
+
+- It's actually stupidly simple
+- It's one of the big 3 advantages of FP
+- It just means "<span class="red">programming without side effects</span>"
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+]
+.right-column[
+
+# What is Purity
+
+- It just means "programming without side effects"
+
+<br/>
+## Fine, then <span class="red">what the hell are side effects</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+]
+.right-column[
+
+# What is Purity
+
+- It just means "programming without side effects"
+
+<br/>
+## Fine, then what the hell are side effects
+
+- <span class="red">Side effects are changes to local or global state</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+]
+.right-column[
+
+# What is Purity
+
+- It just means "programming without side effects"
+
+<br/>
+## Fine, then what the hell are side effects
+
+- Side effects are changes to local or global state
+  - Changing a persistent variable?  <span class="red">Side effect.</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+]
+.right-column[
+
+# What is Purity
+
+- It just means "programming without side effects"
+
+<br/>
+## Fine, then what the hell are side effects
+
+- Side effects are changes to local or global state
+  - Changing a persistent variable?  Side effect.
+  - <span class="red">Modifying the contents of an argument</span>?  Side effect.
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+]
+.right-column[
+
+# What is Purity
+
+- It just means "programming without side effects"
+
+<br/>
+## Fine, then what the hell are side effects
+
+- Side effects are changes to local or global state
+  - Changing a persistent variable?  Side effect.
+  - Modifying an argument?  Side effect.
+  - <span class="red">Loading from disk or network</span>?  Side effect.
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+]
+.right-column[
+
+# What is Purity
+
+- It just means "programming without side effects"
+
+<br/>
+## Fine, then what the hell are side effects
+
+- Side effects are changes to local or global state
+  - Changing a persistent variable?  Side effect.
+  - Modifying an argument?  Side effect.
+  - Loading from disk or network?  Side effect.
+  - <span class="red">Writing to disk or network</span>?  Side effect.
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+]
+.right-column[
+
+# What is Purity
+
+- It just means "programming without side effects"
+
+<br/>
+## Fine, then what the hell are side effects
+
+- Side effects are changes to local or global state
+  - Changing a persistent variable?  Side effect.
+  - Modifying an argument?  Side effect.
+  - Loading from disk or network?  Side effect.
+  - Writing to disk or network?  Side effect.
+  - <span class="red">Mutating a non-local variable</span>?  Side effect.
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+]
+.right-column[
+
+# What is Purity
+
+- It just means "programming without side effects"
+
+<br/>
+## Fine, then what the hell are side effects
+
+- Side effects are changes to local or global state
+  - Changing a persistent variable?  Side effect.
+  - Modifying an argument?  Side effect.
+  - Loading from disk or network?  Side effect.
+
+<span class="red">These things are easily avoided.</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+]
+.right-column[
+
+# What is Purity
+
+- It just means "programming without side effects"
+
+<br/>
+## Fine, then what the hell are side effects
+
+- Side effects are changes to local or global state
+  - Changing a persistent variable?  Side effect.
+  - Modifying an argument?  Side effect.
+  - Loading from disk or network?  Side effect.
+
+These things are easily avoided.
+
+In general, <span class="red">if you can call a function with the same arguments, but get a different result</span>,
+it's because of side effects.
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+]
+.right-column[
+
+# What is Purity
+
+- It just means "programming without side effects"
+
+<br/>
+## Fine, then what the hell are side effects
+
+- Side effects are changes to local or global state
+  - Changing a persistent variable?  Side effect.
+  - Modifying an argument?  Side effect.
+  - Loading from disk or network?  Side effect.
+
+These things are easily avoided.
+
+In general, if you can call a function with the same arguments, but get a different result,
+it's because of side effects.
+
+Pure code is more like math: `f(x)` always does the same thing.  That means there's less to think
+about, <span class="red">which makes reasoning easier</span>.
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+]
+.right-column[
+
+# Code example
+
+Impure
+
+```javascript
+var counter = 0;
+function move_counter(by) {
+  counter += by;
+  return counter;
+}
+```
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+]
+.right-column[
+
+# Code example
+
+Impure
+
+```javascript
+var counter = 0;
+function move_counter(by) { counter += by; return counter; }
+```
+
+This is impure because, within the function, we change state that lives outside of the function.  This means that if we call the function repeatedly with
+the same value, we'll get different results:
+
+```
+move_counter(3); // 3
+move_counter(3); // 6
+move_counter(3); // 9
+```
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+]
+.right-column[
+
+# Code example
+
+Pure
+
+```javascript
+var counter = 0;
+function move_counter(counter, by) {
+  return counter + by;
+}
+```
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+]
+.right-column[
+
+# Code example
+
+Pure
+
+```javascript
+var counter = 0;
+function move_counter(counter, by) { return counter + by; }
+```
+
+This is pure because the return value is <span class="red">based on nothing but the arguments</span>.
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+]
+.right-column[
+
+# Code example
+
+Pure
+
+```javascript
+var counter = 0;
+function move_counter(counter, by) { return counter + by; }
+```
+
+This is pure because the return value is based on nothing but the arguments.  As a result, <span class="red">two changes occur</span>:
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+]
+.right-column[
+
+# Code example
+
+Pure
+
+```javascript
+var counter = 0;
+function move_counter(counter, by) { return counter + by; }
+```
+
+This is pure because the return value is based on nothing but the arguments.  As a result, two changes occur:
+
+## 1. Calls ***with the same arguments***&nbsp; <span class="red">give the same results</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+]
+.right-column[
+
+# Code example
+
+Pure
+
+```javascript
+var counter = 0;
+function move_counter(counter, by) { return counter + by; }
+```
+
+This is pure because the return value is based on nothing but the arguments.  As a result, two changes occur:
+
+<ol class="no-last-li-dark">
+  <li>Calls <u><i>with the same arguments</i></u> give the same results</li>
+</ol>
+
+```
+move_counter(counter, 3); // 3
+move_counter(counter, 3); // 3
+move_counter(counter, 3); // 3
+```
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+]
+.right-column[
+
+# Code example
+
+Pure
+
+```javascript
+var counter = 0;
+function move_counter(counter, by) { return counter + by; }
+```
+
+This is pure because the return value is based on nothing but the arguments.  As a result, two changes occur:
+
+<ol class="no-last-li-dark">
+  <li>Calls <u><i>with the same arguments</i></u> give the same results</li>
+</ol>
+
+```
+move_counter(counter, 3); // 3
+move_counter(counter, 3); // 3
+move_counter(counter, 3); // 3
+```
+
+## 2. State has to be managed <span class="red">outside the pure function</span>
+</ol>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+]
+.right-column[
+
+# Code example
+
+Pure
+
+```javascript
+var counter = 0;
+function move_counter(counter, by) { return counter + by; }
+```
+
+This is pure because the return value is based on nothing but the arguments.  As a result, two changes occur:
+
+<ol class="no-last-li-dark">
+  <li>Calls <u><i>with the same arguments</i></u> give the same results</li>
+</ol>
+
+```
+move_counter(counter, 3); // 3
+move_counter(counter, 3); // 3
+move_counter(counter, 3); // 3
+```
+
+<ol class="no-last-li-dark" start="2">
+  <li>State has to be managed outside the pure function</li>
+</ol>
+
+<span class="red">We can still get the behavior we expect.</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+]
+.right-column[
+
+# Code example
+
+Pure
+
+```javascript
+var counter = 0;
+function move_counter(counter, by) { return counter + by; }
+```
+
+This is pure because the return value is based on nothing but the arguments.  As a result, two changes occur:
+
+<ol class="no-last-li-dark">
+  <li>Calls <u><i>with the same arguments</i></u> give the same results</li>
+</ol>
+
+```
+move_counter(counter, 3); // 3
+move_counter(counter, 3); // 3
+move_counter(counter, 3); // 3
+```
+
+<ol class="no-last-li-dark" start="2">
+  <li>State has to be managed outside the counter</li>
+</ol>
+
+We can still get the behavior we expect.
+
+```
+counter = move_counter(counter, 3); // 3
+counter = move_counter(counter, 3); // 6
+counter = move_counter(counter, 3); // 9
+```
+
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+]
+.right-column[
+
+# Code example
+
+Impure
+
+```javascript
+var counter = 0;
+function move_counter(by) { counter += by; return counter; }
+```
+
+```
+move_counter(3); // 3
+move_counter(3); // 6
+move_counter(3); // 9
+```
+
+<br/>
+Pure
+
+```javascript
+var counter = 0;
+function move_counter(counter, by) { return counter + by; }
+```
+
+```
+counter = move_counter(counter, 3); // 3
+counter = move_counter(counter, 3); // 6
+counter = move_counter(counter, 3); // 9
+```
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+]
+.right-column[
+
+# That's all this is about?
+
+<img style="width:70%;" src="img/picard disgust.jpeg"/>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+template: inverse
+
+# <span class="red">That's all</span> this is about
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+]
+.right-column[
+
+# That's all this is about
+
+<img style="width:65%;" src="img/trying not to laugh picard.jpg"/>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+]
+.right-column[
+
+<div class="fullslide" style="background-image: url('img/What if I told you the difference is profound.jpeg');"></div>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+]
+.right-column[
+
+# (State is) all this is about
+
+<span class="red">If you could get all the stuff</span> I was talking about before, for a little change like that &hellip;
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+]
+.right-column[
+
+# (State is) all this is about
+
+If you could get all the stuff I was talking about before, for a little change like that &hellip;
+
+<ul class="no-last-li-dark" style="column-count:2">
+  <li>Easier reasoning</li>
+  <li>Composability</li>
+  <li>Shorter total code</li>
+  <li>Smaller functions</li>
+  <li>Functional transforms</li>
+  <li>Library oriented dev</li>
+  <li>Mostly eliminated state</li>
+  <li>Easier to test</li>
+  <li>Easier to refactor</li>
+  <li>Verb-oriented dev</li>
+  <li>Most code is chainable</li>
+  <li>Code snaps together</li>
+  <li>Idemoptence is easier</li>
+  <li>Referential transparency</li>
+  <li>Automatic parallelization</li>
+  <li>Immutable work steps</li>
+  <li>Support for STM</li>
+  <li><span class="red">... and moar</span></li>
+</ul>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+]
+.right-column[
+
+# (State is) all this is about
+
+If you could get all the stuff I was talking about before, for a little change like that &hellip;
+
+<ul class="no-last-li-dark" style="column-count:2">
+  <li>Easier reasoning</li>
+  <li>Composability</li>
+  <li>Shorter total code</li>
+  <li>Smaller functions</li>
+  <li>Functional transforms</li>
+  <li>Library oriented dev</li>
+  <li>Mostly eliminated state</li>
+  <li>Easier to test</li>
+  <li>Easier to refactor</li>
+  <li>Verb-oriented dev</li>
+  <li>Most code is chainable</li>
+  <li>Code snaps together</li>
+  <li>Idemoptence is easier</li>
+  <li>Referential transparency</li>
+  <li>Automatic parallelization</li>
+  <li>Immutable work steps</li>
+  <li>Support for STM</li>
+  <li>... and moar</li>
+</ul>
+
+<span style="font-weight: bold; text-decoration: underline;" class="red">Wouldn't it be worth making that change?</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+template: inverse
+
+# <span class="red">How much work</span> is purity
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+]
+.right-column[
+
+# How much work is purity
+
+<span class="red">Four general kinds of work in a new programming approach.</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+]
+.right-column[
+
+# How much work is purity
+
+Four general kinds of work in a new programming approach.
+
+1. <span class="red">Getting tooling set up</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+]
+.right-column[
+
+# How much work is purity
+
+Four general kinds of work in a new programming approach.
+
+1. Getting tooling set up
+  1. <span class="red">This is free.</span>
+
+<img src="img/tentative picard.jpeg"/>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+]
+.right-column[
+
+# How much work is purity
+
+Four general kinds of work in a new programming approach.
+
+1. Getting tooling set up
+  1. This is free.
+  1. <span class="red">There's no tools.</span>  It's just a choice you make when coding.
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+]
+.right-column[
+
+# How much work is purity
+
+Four general kinds of work in a new programming approach.
+
+1. Getting tooling set up
+  1. This is free.
+
+1. <span class="red">Making the old codebase ready</span> for the new way.
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+]
+.right-column[
+
+# How much work is purity
+
+Four general kinds of work in a new programming approach.
+
+1. Getting tooling set up
+  1. This is free.
+
+1. Making the old codebase ready for the new way.
+  1. <span class="red">This is also free</span>.
+
+<img src="img/picard yesss.jpg"/>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+]
+.right-column[
+
+# How much work is purity
+
+Four general kinds of work in a new programming approach.
+
+1. Getting tooling set up
+  1. This is free.
+
+1. Making the old codebase ready for the new way.
+  1. This is also free.
+  1. Pure and impure can <span class="red">live just fine together</span>.
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+]
+.right-column[
+
+# How much work is purity
+
+Four general kinds of work in a new programming approach.
+
+1. Getting tooling set up
+  1. This is free.
+
+1. Making the old codebase ready for the new way.
+  1. This is also free.
+  1. Pure and impure can live just fine together.
+  1. You get <span class="red">benefit in the very first function</span> you convert
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+]
+.right-column[
+
+# How much work is purity
+
+Four general kinds of work in a new programming approach.
+
+1. Getting tooling set up
+  1. This is free.
+
+1. Making the old codebase ready for the new way.
+  1. This is also free.
+  1. Pure and impure can live just fine together.
+  1. You get benefit in the first function you convert
+  1. The benefit <span class="red">grows as you continue</span>.
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+]
+.right-column[
+
+# How much work is purity
+
+Four general kinds of work in a new programming approach.
+
+1. Getting tooling set up (free)
+
+1. Making the old codebase ready (free)
+
+1. <span class="red">Improving old code</span>
+
+<img src="img/picard and riker watching sternly.jpg"/>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+]
+.right-column[
+
+# How much work is purity
+
+Four general kinds of work in a new programming approach.
+
+1. Getting tooling set up (free)
+
+1. Making the old codebase ready (free)
+
+1. Improving old code
+  1. There's <span class="red">no actual need to overhaul</span> anything
+
+<img src="img/picard grinning.jpg" style="width: 60%"/>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+]
+.right-column[
+
+# How much work is purity
+
+Four general kinds of work in a new programming approach.
+
+1. Getting tooling set up (free)
+
+1. Making the old codebase ready (free)
+
+1. Improving old code
+  1. There's no actual need to overhaul anything
+  1. This can usually be done <span class="red">one function at a time</span>
+
+<img src="img/picard bursting.jpg" style="width: 60%"/>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+]
+.right-column[
+
+# How much work is purity
+
+Four general kinds of work in a new programming approach.
+
+1. Getting tooling set up (free)
+
+1. Making the old codebase ready (free)
+
+1. Improving old code
+  1. There's no actual need to overhaul anything
+  1. This can usually be done one function at a time
+  1. You can <span class="red">just casually fix things</span> when you see them
+
+<img src="img/sherlock_picard.png" style="width: 60%"/>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+]
+.right-column[
+
+# How much work is purity
+
+Four general kinds of work in a new programming approach.
+
+1. Getting tooling set up (free)
+
+1. Making the old codebase ready (free)
+
+1. Improving old code
+  1. There's no actual need to overhaul anything
+  1. This can usually be done one function at a time
+  1. Just casually fix things when you see them
+  1. Pull-up refactorings will lead to <span class="red">rapid removal of duplicate code</span>
+
+<img src="img/two picards short.png" style="width: 60%"/>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+]
+.right-column[
+
+# How much work is purity
+
+Four general kinds of work in a new programming approach.
+
+1. Getting tooling set up (free)
+
+1. Making the old codebase ready (free)
+
+1. Improving old code (almost free)
+
+1. Learning to <span class="red">think this way</span>
+
+<img src="img/picard clapping.gif"/>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+]
+.right-column[
+
+# How much work is purity
+
+Four general kinds of work in a new programming approach.
+
+1. Getting tooling set up (free)
+
+1. Making the old codebase ready (free)
+
+1. Improving old code (almost free)
+
+1. Learning to think this way
+  1. Admittedly, <span class="red">this takes a little work</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+template: inverse
+
+# <span class="red">How do we</span> do us one purity
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+  ## How to do plox
+]
+.right-column[
+
+# How do we do us one purity
+
+Really just need to do <span class="red">two things</span>.
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+  ## How to do plox
+]
+.right-column[
+
+# How do we do us one purity
+
+Really just need to do two things.
+
+1. <span class="red">Write pure functions</span> when it's convenient
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+  ## How to do plox
+]
+.right-column[
+
+# How do we do us one purity
+
+Really just need to do two things.
+
+1. Write pure functions when it's convenient
+  1. With practice, this will be "<span class="red">almost always</span>"
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+  ## How to do plox
+]
+.right-column[
+
+# How do we do us one purity
+
+Really just need to do two things.
+
+1. Write pure functions when it's convenient
+  1. With practice, this will be "almost always"
+
+1. <span class="red">Refactor code</span> when you notice an opportunity
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+  ## How to do plox
+]
+.right-column[
+
+# How do we do us one purity
+
+Really just need to do two things.
+
+1. Write pure functions when it's convenient
+  1. With practice, this will be "almost always"
+
+1. Refactor code when you notice an opportunity
+  1. <span class="red">This will come up a lot in PRs</span> when everyone's new
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+  ## How to do plox
+]
+.right-column[
+
+# How do we do us one purity
+
+Really just need to do two things.
+
+1. Write pure functions when it's convenient
+  1. With practice, this will be "almost always"
+
+1. Refactor code when you notice an opportunity
+  1. This will come up a lot in PRs
+  1. This should be seen as <span class="red">productive work on old code</span> because of its impact on developer speed
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+  ## How to do plox
+]
+.right-column[
+
+# But what about <span class="red">old code</span>?
+
+<img src="img/frankenstein's monster.jpeg"/>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+  ## How to do plox
+]
+.right-column[
+
+# But what about old code?
+
+- <span class="red">Big deal</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+  ## How to do plox
+]
+.right-column[
+
+# But what about old code?
+
+- Big deal.
+
+- Improve it.
+  - Refactoring is usually <span class="red">limited to a single function</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+  ## How to do plox
+]
+.right-column[
+
+# But what about old code?
+
+- Big deal.
+
+- Improve it.
+  - Refactoring is usually limited to a single function
+  - We can do this incrementally <span class="red">over time, as a group</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+  ## How to do plox
+]
+.right-column[
+
+# But what about old code?
+
+- Big deal.
+
+- Improve it.
+  - Refactoring is usually limited to a single function
+  - Incrementally over time, as a group
+  - Don't underestimate <span class="red">the power of mobs</span>
+
+<img src="img/torches and pitchforks.gif"/>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+  ## How to do plox
+]
+.right-column[
+
+# But what about old code?
+
+- Big deal.
+
+- Improve it.
+
+- <span class="red">Or don't</span>.
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+  ## How to do plox
+]
+.right-column[
+
+# But what about old code?
+
+- Big deal.
+
+- Improve it.
+
+- Or don't.
+  - This isn't religion.  <span class="red">Not everything needs to be converted</span>.
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+  ## How to do plox
+]
+.right-column[
+
+# But what about old code?
+
+- Big deal.
+
+- Improve it.
+
+- Or don't.
+  - This isn't religion.  Not everything must convert.
+  - Converting to pure functions is a good choice when you want to <span class="red">improve reusability, maintainability, or testability</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+  ## How to do plox
+]
+.right-column[
+
+# But what about old code?
+
+- Big deal.
+
+- Improve it.
+
+- Or don't.
+  - This isn't religion.  Not everything must convert.
+  - A good choice for reuse, maintenance, testing
+  - Otherwise probably <span class="red">leave stable code be</span>
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+template: inverse
+
+# <span class="red">Next steps</span>
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+
+---
+
+
+
+layout: false
+.left-column[
+  ## In this talk
+  ## What is Purity
+  ## Yep that's it
+  ## How much work
+  ## How to do plox
+  ## Next steps
+]
+.right-column[
+
+# What about next steps?
+
+Just <span class="red">start writing pure code</span>.
+
+]
+.footnote[[Propaganda site](https://stonecypher.github.io/TechTalks-PurityIsYourVeryBestFriend/#3)]
+
+
+    </textarea>
+    <script src="js/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

@@ -134,29 +134,85 @@ Lol no it's not
 Typescript can find the bug.  Can you?
 
 ```typescript
-enum month { January, February, March, April, May, June, July,
-             August, September, October, November, December };
+const formatPrice = (num, symbol = "$") =>
+  `${symbol}${num.toFixed(2)}`;
+
+formatPrice("1234");
+```
+
+
+
+---
+
+This needs no annotation at all.
+
+The formatted price is a string.  In use, it's being treated like a number; strings don't have `.toFixed`.
+
+```typescript
+const formatPrice = (num, symbol = "$") =>
+  `${symbol}${num.toFixed(2)}`;
+
+formatPrice("1234");
+```
+
+
+
+---
+
+Typescript can find the bug.  Can you?
+
+```typescript
+type month = 'January' | 'February' | 'March' | 'April' | 'May' | 'June' | 'July'
+           | 'August' | 'September' | 'October' | 'November' | 'December';
 
 const NoLeapYear_DayCount(WhichMonth: Month) {
   switch (WhichMonth) {
 
-    case month.February  : return 28;
-    case month.April     : 
-    case month.June      : 
-    case month.September : 
-    case month.November  : return 30;
-    case month.January   : 
-    case month.March     : 
-    case month.May       : 
-    case month.August    : 
-    case month.October   : 
-    case month.December  : return 31;
+    case 'February'  : return 28;
+
+    case 'April'     :
+    case 'June'      :
+    case 'September' :
+    case 'November'  : return 30;
+
+    case 'January'   :
+    case 'March'     :
+    case 'May'       :
+    case 'August'    :
+    case 'October'   :
+    case 'December'  : return 31;
 
   }
 }
 ```
 
 
+
+---
+
+lol there's three
+
+
+
+---
+
+1) That's not how you define a function
+
+```typescript
+const NoLeapYear_DayCount(WhichMonth: Month) {
+```
+
+should be
+
+```typescript
+function NoLeapYear_DayCount(WhichMonth: Month) {
+```
+
+or
+
+```typescript
+const NoLeapYear_DayCount = (WhichMonth: Month) => {
+```
 
 ---
 
@@ -170,19 +226,20 @@ enum month { January, February, March, April, May, June, July,
 const NoLeapYear_DayCount(WhichMonth: Month) {
   switch (WhichMonth) {
 
-    case month.February  : return 28;
-    case month.April     : 
-    case month.June      : 
-    case month.September : 
-    case month.November  : return 30;
-    case month.January   : 
-    case month.March     : 
-    case month.May       : 
-    case month.August    : 
-    case month.October   : 
-    case month.December  : return 31;
+    case 'February  : return 28;
+    case 'April     :
+    case 'June      :
+    case 'September :
+    case 'November  : return 30;
+    case 'January   :
+    case 'March     :
+    case 'May       :
+    case 'August    :
+    case 'October   :
+    case 'December  : return 31;
 
-    default: unreachable : never = 1;
+    default:
+      myDisallow: never = 'This should not be possible';
 
   }
 }
